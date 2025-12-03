@@ -98,10 +98,10 @@ L'interface permet ensuite de:
 
 -   Fichier TXT brut contenant les données à analyser de format suivant:
 
-[...]
-Plate Name	'Plate_name'
-[...]
-[Data]
+[...]\
+Plate Name	'Plate_name'\
+[...]\
+[Data]\
 [...]
 
 ------------------------------------------------------------------------
