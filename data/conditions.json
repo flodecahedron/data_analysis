@@ -1,0 +1,33 @@
+{
+    "conditions": [
+        "PTX-3 10ng",
+        "PTX-3 20ng",
+        "PTX-3 40ng",
+
+        "NRP1-R 2000pg",
+        "NRP1-R 3000pg",
+        "NRP1-R 5000pg",
+
+        "NRP1-E 2000pg",
+        "NRP1-E 3000pg",
+        "NRP1-E 5000pg",
+
+        "COL7A1-R 5ng",
+        "COL7A1-R 10ng",
+        "COL7A1-R 20ng",
+        "COL7A1-R 50ng",
+
+        "COL7A1-E 3ng",
+     
+        "VEGFA-R 555pg",
+        "VEGFA-R 1000pg",
+        "VEGFA-R 4000pg",
+        "VEGFA-R 8000pg",
+
+        "VEGFA-E 555pg",
+        "VEGFA-E 750pg",
+
+        "DMEM+SVF",
+        "DMEM vide"
+    ]
+}
