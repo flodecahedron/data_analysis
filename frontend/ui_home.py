@@ -1,24 +1,65 @@
 import tkinter as tk
-from frontend.ui_assign import AssignWindow
 
-class HomeWindow:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("NAOS data analysis")
-        self.root.iconbitmap("naos.ico")
 
-        frame = tk.Frame(root, padx=40, pady=40)
-        frame.pack()
+class HomePage(tk.Frame):
+    """
+    Page d'accueil.
+    Affiche un titre et un bouton pour aller à l'étape d'import.
+    """
 
-        tk.Label(frame, text="Outil d'aide à l'analyse de données",
-                 font=("Arial", 18, "bold")).pack(pady=20)
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg="#F5F6F7")
 
-        tk.Button(frame, text="Commencer",
-                  font=("Arial", 14),
-                  command=self.open_assign_window).pack(pady=15)
+        self.controller = controller
 
-    def open_assign_window(self):
-        self.root.destroy()
-        root = tk.Tk()
-        AssignWindow(root)
-        root.mainloop()
+        # --- Layout principal ---
+        container = tk.Frame(self, bg="#F5F6F7", padx=40, pady=40)
+        container.place(relx=0.5, rely=0.5, anchor="center")
+
+        # --- Titre ---
+        title = tk.Label(
+            container,
+            text="Outil d'analyse de données NAOS",
+            font=("Segoe UI", 24, "bold"),
+            bg="#F5F6F7",
+            fg="#333"
+        )
+        title.pack(pady=(0, 20))
+
+        # --- Sous-titre ---
+        subtitle = tk.Label(
+            container,
+            text="Bienvenue. Cliquez ci-dessous pour commencer.",
+            font=("Segoe UI", 12),
+            bg="#F5F6F7",
+            fg="#555"
+        )
+        subtitle.pack(pady=(0, 30))
+
+        # --- Bouton Commencer ---
+        start_btn = tk.Button(
+            container,
+            text="Commencer",
+            font=("Segoe UI", 14),
+            relief="raised",
+            bd=2,
+            padx=20,
+            pady=8,
+            command=self.go_to_assign_page
+        )
+        start_btn.pack()
+
+    # ------------------------------------------------------------------
+
+    def go_to_assign_page(self):
+        """Navigation vers la première étape."""
+        self.controller.show_frame("AssignPage")
+
+    # ------------------------------------------------------------------
+
+    def on_show(self):
+        """
+        Hook optionnel appelé à chaque affichage.
+        Utile plus tard si on veut rafraîchir la page.
+        """
+        pass
