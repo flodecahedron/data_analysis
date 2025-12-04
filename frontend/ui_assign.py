@@ -1,11 +1,13 @@
 import tkinter as tk
-from tkinter import messagebox, filedialog
+from tkinter import filedialog
 import random
 import importlib.util
-from frontend.ui_run_backend import BackendWindow
-from backend.condition_manager import ConditionManager
 import difflib
 import os
+
+from frontend.ui_run_backend import BackendWindow
+from backend.condition_manager import ConditionManager
+from backend.silent_show import silent_info, silent_warning
 
 ROWS = ["A","B","C","D","E","F","G","H"]
 COLS = [str(i) for i in range(1,13)]
@@ -17,7 +19,8 @@ def random_color():
 class AssignWindow:
     def __init__(self, root):
         self.root = root
-        self.root.title("Assignation des conditions aux puits")
+        self.root.title("NAOS data analysis - Assignation des conditions aux puits")
+        self.root.iconbitmap("naos.ico")
 
         self.current_condition = None
         self.current_control = False
@@ -56,7 +59,9 @@ class AssignWindow:
         # Boutons
         tk.Button(top_frame, text="Sélectionner condition",
                   command=self.set_condition).pack(side=tk.LEFT, padx=5)
-        tk.Button(top_frame, text="Importer well_map existant",
+        tk.Label(top_frame,text="ou"
+                 ,font=("Arial", 10, "italic"),fg="grey").pack(side=tk.LEFT, padx=3)
+        tk.Button(top_frame, text="Importer répartition existante",
                   command=self.import_well_map).pack(side=tk.LEFT, padx=5)
 
         # Plaque
@@ -78,10 +83,7 @@ class AssignWindow:
         self.legend_labels = {}
 
         # Boutons bas
-        tk.Button(self.root, text="Exporter vers well_map.py",
-                  command=self.export_well_map_file).pack(pady=5)
-
-        tk.Button(self.root, text="Passer au traitement des données",
+        tk.Button(self.root, text="Poursuivre",
                   command=self.next_window, bg="#88ccee").pack(pady=15)
 
     def update_legend(self):
@@ -145,7 +147,7 @@ class AssignWindow:
             self.update_well_button_color(well, cond)
 
         self.update_legend()
-        messagebox.showinfo("Import réussi", "well_map importé et plaque mise à jour.")
+        silent_info("Import réussi", "Plaque mise à jour.")
 
     def update_well_button_color(self, well, cond):
         """Met à jour la couleur et le contour selon le type de condition."""
@@ -157,6 +159,7 @@ class AssignWindow:
             self.well_buttons[well].config(bg=color, relief="raised", bd=1)
 
     def next_window(self):
+        self.export_well_map_file
         self.root.destroy()
         root = tk.Tk()
         BackendWindow(root)
@@ -165,7 +168,7 @@ class AssignWindow:
     def set_condition(self):
         cond = self.cond_entry.get().strip()
         if not cond:
-            messagebox.showwarning("Erreur", "Veuillez entrer un nom de condition.")
+            silent_warning("Erreur", "Veuillez entrer un nom de condition.")
             return
 
         self.current_condition = cond
@@ -182,13 +185,13 @@ class AssignWindow:
         self.condition_library = self.condition_manager.get_all()
 
         self.update_legend()
-        messagebox.showinfo("Condition sélectionnée",
+        silent_info("Condition sélectionnée",
                             f"Vous assignez maintenant les puits à : {cond} "
                             f"{'(Contrôle)' if self.current_control else ''}")
 
     def assign_well(self, well):
         if self.current_condition is None:
-            messagebox.showwarning("Condition manquante",
+            silent_warning("Condition manquante",
                                    "Veuillez d'abord sélectionner une condition.")
             return
 
@@ -248,5 +251,4 @@ class AssignWindow:
             f.write("\n".join(lines))
 
         self.update_legend()
-        messagebox.showinfo("Export réussi", "Fichier well_map.py mis à jour.")
         

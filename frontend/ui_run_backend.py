@@ -1,14 +1,16 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 
 from backend.data_processing import data_preprocessing, data_processing
-from backend.save_fig import save_fig
+from backend.save_excel import save_excel
 from backend.well_map import well_map
+from backend.silent_show import silent_info, silent_warning
 
 class BackendWindow:
     def __init__(self, root):
         self.root = root
-        self.root.title("Exécution du traitement")
+        self.root.title("NAOS data analysis - Choix des données")
+        self.root.iconbitmap("naos.ico")
 
         frame = tk.Frame(root, padx=20, pady=20)
         frame.pack()
@@ -18,6 +20,11 @@ class BackendWindow:
 
         tk.Button(frame, text="Sélectionner fichier", command=self.open_file
                   ).pack(pady=10)
+
+        # Label affichant le fichier sélectionné
+        self.file_label = tk.Label(frame, text="Aucun fichier sélectionné",
+                                   fg="gray", font=("Arial", 10))
+        self.file_label.pack(pady=5)
 
         self.filepath = None
 
@@ -30,22 +37,21 @@ class BackendWindow:
             filetypes=[("TXT files", "*.txt"), ("All files", "*.*")]
         )
         if self.filepath:
-            messagebox.showinfo("Fichier sélectionné",
-                                f"Fichier choisi :\n{self.filepath}")
+            # ➜ mettre le chemin du fichier dans la fenêtre (gris)
+            self.file_label.config(text=self.filepath, fg="gray")
 
     def run_backend(self):
         if not self.filepath:
-            messagebox.showerror("Erreur", "Veuillez d’abord choisir un fichier.")
+            silent_warning("Erreur", "Veuillez d’abord choisir un fichier.")
             return
 
         try:
-            end=0
             start, plate_name = data_preprocessing(self.filepath)
             results = data_processing(self.filepath, well_map, start, plate_name)
-            end = save_fig(results, well_map, plate_name)
+            end = save_excel(results, well_map, plate_name)
 
             if end:
-                messagebox.showinfo("Succès", "Traitement terminé !")
+                silent_info("Succès", "Traitement terminé !")
 
         except Exception as e:
-            messagebox.showerror("Erreur pendant le traitement", str(e))
+            silent_warning("Erreur pendant le traitement", str(e))
