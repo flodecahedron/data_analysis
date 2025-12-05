@@ -18,7 +18,7 @@ class MainApp(tk.Tk):
     - page registration
     - page switching
     - centralized navigation
-    """
+    """ 
 
     def __init__(self):
         super().__init__()
@@ -40,7 +40,7 @@ class MainApp(tk.Tk):
         style.theme_use('clam')
         style.configure("TFrame", background="#F5F6F7")  # Container background
         style.configure("TLabel", background="#F5F6F7")
-        style.configure("TButton", background="#4477aa", foreground="white")
+        style.configure("TButton", background="#4477aa", foreground="#072939")
 
         # ------------------- Container --------------------------
         # A single container holds all frames stacked on each other.

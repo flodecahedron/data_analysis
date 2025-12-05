@@ -192,4 +192,4 @@ def save_excel(results_csv, well_map, plate_name):
 
             ws.insert_chart('F2', chart, {'x_scale': 1.4, 'y_scale': 1.1})
 
-    return True
+    return out_file

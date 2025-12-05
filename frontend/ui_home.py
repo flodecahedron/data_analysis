@@ -1,10 +1,12 @@
 import tkinter as tk
 
+# ---------------------------------------------------------------------------
+# Home Page Frame
 
 class HomePage(tk.Frame):
     """
-    Page d'accueil.
-    Affiche un titre et un bouton pour aller à l'étape d'import.
+    Home page frame.
+    Displays the main title and a button to navigate to the assignment step.
     """
 
     def __init__(self, parent, controller):
@@ -12,34 +14,36 @@ class HomePage(tk.Frame):
 
         self.controller = controller
 
-        # --- Layout principal ---
+        # ------------------- Main layout container -------------------
         container = tk.Frame(self, bg="#F5F6F7", padx=40, pady=40)
         container.place(relx=0.5, rely=0.5, anchor="center")
 
-        # --- Titre ---
+        # ------------------- Title -------------------
         title = tk.Label(
             container,
-            text="Outil d'analyse de données NAOS",
+            text="Outil d'analyse de données",
             font=("Segoe UI", 24, "bold"),
             bg="#F5F6F7",
-            fg="#333"
+            fg="#072939"
         )
         title.pack(pady=(0, 20))
 
-        # --- Sous-titre ---
+        # ------------------- Subtitle -------------------
         subtitle = tk.Label(
             container,
-            text="Bienvenue. Cliquez ci-dessous pour commencer.",
+            text="Bienvenue! Cliquez ci-dessous pour commencer.",
             font=("Segoe UI", 12),
             bg="#F5F6F7",
-            fg="#555"
+            fg="#072939"
         )
         subtitle.pack(pady=(0, 30))
 
-        # --- Bouton Commencer ---
+        # ------------------- Start Button -------------------
         start_btn = tk.Button(
             container,
-            text="Commencer",
+            text="Démarrer",
+            bg="#072939",
+            fg="white",
             font=("Segoe UI", 14),
             relief="raised",
             bd=2,
@@ -50,16 +54,14 @@ class HomePage(tk.Frame):
         start_btn.pack()
 
     # ------------------------------------------------------------------
-
     def go_to_assign_page(self):
-        """Navigation vers la première étape."""
+        """Navigate to the assignment page."""
         self.controller.show_frame("AssignPage")
 
     # ------------------------------------------------------------------
-
     def on_show(self):
         """
-        Hook optionnel appelé à chaque affichage.
-        Utile plus tard si on veut rafraîchir la page.
+        Optional hook called each time the page is displayed.
+        Useful for refreshing content if needed.
         """
         pass
