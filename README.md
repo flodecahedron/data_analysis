@@ -84,7 +84,7 @@ Installer les packages nécessaires :
 
 Depuis la racine du projet, exécuter :
 
-    python -m frontend.main_app
+    python -m main
 
 L'interface permet ensuite de:
 
